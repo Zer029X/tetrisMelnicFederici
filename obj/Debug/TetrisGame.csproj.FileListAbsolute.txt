@@ -1,0 +1,7 @@
+C:\Users\andri\source\repos\TetrisGame\TetrisGame\bin\Debug\TetrisGame.exe.config
+C:\Users\andri\source\repos\TetrisGame\TetrisGame\bin\Debug\TetrisGame.exe
+C:\Users\andri\source\repos\TetrisGame\TetrisGame\bin\Debug\TetrisGame.pdb
+C:\Users\andri\source\repos\TetrisGame\TetrisGame\obj\Debug\TetrisGame.csprojAssemblyReference.cache
+C:\Users\andri\source\repos\TetrisGame\TetrisGame\obj\Debug\TetrisGame.csproj.CoreCompileInputs.cache
+C:\Users\andri\source\repos\TetrisGame\TetrisGame\obj\Debug\TetrisGame.exe
+C:\Users\andri\source\repos\TetrisGame\TetrisGame\obj\Debug\TetrisGame.pdb
