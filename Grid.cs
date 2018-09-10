@@ -6,26 +6,30 @@ using System.Threading.Tasks;
 
 namespace TetrisGame
 {
-    class Grid
+    public class Grid
     {
-        public static int[,] grid = new int[20, 10];
+        public static int[,] grid = new int[23, 10];
+        
+        //Griglia contenente tutti i tetramini caduti
+        public static int[,] gridTetraminiCaduti = new int[23, 10];
+
         public Grid()
         {
 
         }
         public static void drawBorder()
         {
-            for (int lengthCount = 0; lengthCount <= 20; ++lengthCount)
+            for (int lengthCount = 0; lengthCount <= 22; ++lengthCount)
             {
                 Console.SetCursorPosition(0, lengthCount);
-                Console.Write("|" + lengthCount);
+                Console.Write("|");
                 Console.SetCursorPosition(21, lengthCount);
                 Console.Write("|");
             }
-            Console.SetCursorPosition(0, 20);
+            Console.SetCursorPosition(0, 23);
             for (int widthCount = 0; widthCount <= 10; widthCount++)
             {
-                Console.Write("--");
+                Console.Write("==");
             }
         }
     }
