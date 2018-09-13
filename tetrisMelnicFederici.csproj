@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FFF7DDE8-9D63-4B7D-848F-F17E982B88F8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TetrisGame</RootNamespace>
+    <RootNamespace>tetrisMelnicFederici</RootNamespace>
     <AssemblyName>tetrisMelnicFederici</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
