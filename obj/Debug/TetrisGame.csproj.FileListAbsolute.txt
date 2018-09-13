@@ -19,3 +19,10 @@ C:\Users\andri\Desktop\tetrisMelnicFederici-master\obj\Debug\TetrisGame.csprojAs
 C:\Users\andri\Desktop\tetrisMelnicFederici-master\obj\Debug\TetrisGame.csproj.CoreCompileInputs.cache
 C:\Users\andri\Desktop\tetrisMelnicFederici-master\obj\Debug\TetrisGame.exe
 C:\Users\andri\Desktop\tetrisMelnicFederici-master\obj\Debug\TetrisGame.pdb
+C:\Users\andri\source\repos\tetrisMelnicFederici\bin\Debug\TetrisGame.exe.config
+C:\Users\andri\source\repos\tetrisMelnicFederici\bin\Debug\TetrisGame.exe
+C:\Users\andri\source\repos\tetrisMelnicFederici\bin\Debug\TetrisGame.pdb
+C:\Users\andri\source\repos\tetrisMelnicFederici\obj\Debug\TetrisGame.csprojAssemblyReference.cache
+C:\Users\andri\source\repos\tetrisMelnicFederici\obj\Debug\TetrisGame.csproj.CoreCompileInputs.cache
+C:\Users\andri\source\repos\tetrisMelnicFederici\obj\Debug\TetrisGame.exe
+C:\Users\andri\source\repos\tetrisMelnicFederici\obj\Debug\TetrisGame.pdb

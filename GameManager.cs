@@ -1,14 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TetrisGame
-{
-    class GameManager
-    {
+namespace tetrisMelnicFederici {
+    class GameManager {
         #region  Attributes
         private static Stopwatch timer;
         private static Stopwatch dropTimer;
@@ -21,11 +19,10 @@ namespace TetrisGame
         #endregion
 
         #region Constructor
-        public GameManager()
-        {
-            timer = new Stopwatch();
-            dropTimer = new Stopwatch();
-            inputTimer = new Stopwatch();
+        public GameManager () {
+            timer = new Stopwatch ();
+            dropTimer = new Stopwatch ();
+            inputTimer = new Stopwatch ();
             points = 0;
             dropTime = 300;
             dropRate = 300;
@@ -36,8 +33,6 @@ namespace TetrisGame
         #endregion
 
         #region Methods
-
-
 
         #endregion
     }

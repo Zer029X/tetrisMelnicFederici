@@ -7,7 +7,7 @@
     <ProjectGuid>{FFF7DDE8-9D63-4B7D-848F-F17E982B88F8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>TetrisGame</RootNamespace>
-    <AssemblyName>TetrisGame</AssemblyName>
+    <AssemblyName>tetrisMelnicFederici</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -48,7 +48,6 @@
     <Compile Include="Grid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
