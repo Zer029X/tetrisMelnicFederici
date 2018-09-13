@@ -95,7 +95,6 @@ namespace tetrisMelnicFederici {
             }
             return false;
         } // End ceQualcosaSotto
-
         public bool ceQualcosaSx () {
             for (int i = 0; i < 4; i++) {
                 if (posizioni[i][1] == 0) {
@@ -106,6 +105,45 @@ namespace tetrisMelnicFederici {
             }
             return false;
         }
+        public bool ceQualcosaDx () {
+            for (int i = 0; i < 4; i++) {
+                if (posizioni[i][1] == 9) {
+                    return true;
+                } else if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1] + 1] == 1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool? ceOverlaySotto (List<int[]> posizioni) {
+            List<int> ycoords = new List<int> ();
+            for (int i = 0; i < 4; i++) {
+                ycoords.Add (posizioni[i][0]);
+                if (posizioni[i][0] >= 23)
+                    return true;
+                if ((posizioni[i][0] < 0) || (posizioni[i][1] < 0) || (posizioni[i][1] > 9))
+                    return null;
+            }
+            for (int i = 0; i < 4; i++) {
+                if (ycoords.Max () - ycoords.Min () == 3) {
+                    if (ycoords.Max () == posizioni[i][0] | ycoords.Max () - 1 == posizioni[i][0]) {
+                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                            return true;
+                        }
+                    }
+
+                } else {
+                    if (ycoords.Max () == posizioni[i][0]) {
+                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
         public bool? ceOverlaySx (List<int[]> posizioni) {
             List<int> xcoords = new List<int> ();
             for (int i = 0; i < 4; i++) {
@@ -113,13 +151,9 @@ namespace tetrisMelnicFederici {
                 if (posizioni[i][1] < 0) {
                     return true;
                 }
-                if (posizioni[i][1] > 9) {
+                if ((posizioni[i][1] > 9) || (posizioni[i][0] >= 23) || (posizioni[i][0] < 0)) {
                     return false;
                 }
-                if (posizioni[i][0] >= 23)
-                    return null;
-                if (posizioni[i][0] < 0)
-                    return null;
             }
             for (int i = 0; i < 4; i++) {
                 if (xcoords.Max () - xcoords.Min () == 3) {
@@ -139,16 +173,6 @@ namespace tetrisMelnicFederici {
             }
             return false;
         }
-        public bool ceQualcosaDx () {
-            for (int i = 0; i < 4; i++) {
-                if (posizioni[i][1] == 9) {
-                    return true;
-                } else if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1] + 1] == 1) {
-                    return true;
-                }
-            }
-            return false;
-        }
         public bool? ceOverlayDx (List<int[]> posizioni) {
             List<int> xcoords = new List<int> ();
             for (int i = 0; i < 4; i++) {
@@ -159,9 +183,7 @@ namespace tetrisMelnicFederici {
                 if (posizioni[i][1] < 0) {
                     return false;
                 }
-                if (posizioni[i][0] >= 23)
-                    return null;
-                if (posizioni[i][0] < 0)
+                if ((posizioni[i][0] >= 23) || (posizioni[i][0] < 0))
                     return null;
             }
             for (int i = 0; i < 4; i++) {
@@ -174,8 +196,7 @@ namespace tetrisMelnicFederici {
 
                 } else {
                     if (xcoords.Max () == posizioni[i][1]) {
-                        if (
-                            Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
                             return true;
                         }
                     }
@@ -184,17 +205,11 @@ namespace tetrisMelnicFederici {
             return false;
         }
 
-        public void rimuoviVecchioTetramino () {
-            for (int i = 0; i < 4; i++) {
-                posizioni.RemoveAt (posizioni.Count - 1);
-            }
-
-        }
-
         public void Rotazione () {
             List<int[]> tempPos = new List<int[]> ();
             int[] pivot = posizioni[2];
             String direzione = "orario";
+            int count = 0;
 
             if (tetramino != tetramini[1]) {
                 for (int i = 0; i < tetramino.GetLength (0); i++) {
@@ -216,11 +231,33 @@ namespace tetrisMelnicFederici {
                     tempPos[i] = transformaMatrice (posizioni[i], pivot, direzione);
                 }
 
+                while (ceOverlaySx (tempPos) != false | ceOverlayDx (tempPos) != false | ceOverlaySotto (tempPos) != false) {
+                    if (ceOverlaySx (tempPos) == true) {
+                        for (int i = 0; i < posizioni.Count; i++) {
+                            tempPos[i][1] += 1;
+                        }
+                    }
+
+                    if (ceOverlayDx (tempPos) == true) {
+                        for (int i = 0; i < posizioni.Count; i++) {
+                            tempPos[i][1] -= 1;
+                        }
+                    }
+                    if (ceOverlaySotto (tempPos) == true) {
+                        for (int i = 0; i < posizioni.Count; i++) {
+                            tempPos[i][0] -= 1;
+                        }
+                    }
+                    if (count == 3) {
+                        return;
+                    }
+                    count++;
+                }
+
                 posizioni = tempPos;
             }
 
         } // Rotazione
-
         public int[] transformaMatrice (int[] coord, int[] coordPivot, String senso) {
             int[] nuoveCoordinate = {
                 coord[0] - coordPivot[0],
@@ -238,6 +275,5 @@ namespace tetrisMelnicFederici {
             };
             return nuoveCoordinate;
         }
-
     } // End Classe
 }
