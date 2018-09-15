@@ -31,6 +31,7 @@ namespace tetrisMelnicFederici {
                 }
 
             }
+            disegnaBordi();
         }
 
         public int getElementoMatrice (int i, int j) {
