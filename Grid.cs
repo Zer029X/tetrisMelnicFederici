@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace tetrisMelnicFederici {
     public class Grid {
-        public static int[, ] grid = new int[23, 10];
-
-        //Griglia contenente tutti i tetramini caduti
-        public static int[, ] gridTetraminiCaduti = new int[23, 10];
-
+        private int[, ] matriceGriglia;
         public Grid () {
-
+            matriceGriglia = new int[23, 10];
         }
-        public static void drawBorder () {
+        public void disegnaBordi () {
             for (int lengthCount = 0; lengthCount <= 22; ++lengthCount) {
                 Console.SetCursorPosition (0, lengthCount);
                 Console.Write ("|");
@@ -26,7 +22,8 @@ namespace tetrisMelnicFederici {
                 Console.Write ("=");
             }
         }
-        public static void clearGrid () {
+        public void pulisciGriglia () {
+
             for (int i = 0; i < 23; ++i) {
                 for (int j = 0; j < 10; j++) {
                     Console.SetCursorPosition (2 * j, i);
@@ -35,5 +32,22 @@ namespace tetrisMelnicFederici {
 
             }
         }
+
+        public int getElementoMatrice (int i, int j) {
+            return matriceGriglia[i, j];
+        }
+
+        public void setElementoMatrice (int i, int j, int data) {
+            matriceGriglia[i, j] = data;
+        }
+
+        public void resetGrigliaTetraminiCaduti () {
+            for (int i = 0; i < 23; i++) {
+                for (int j = 0; j < 10; j++) {
+                    matriceGriglia[i, j] = 0;
+                }
+            }
+        }
     }
+
 }

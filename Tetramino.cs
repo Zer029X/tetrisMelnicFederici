@@ -6,26 +6,53 @@ using System.Threading.Tasks;
 
 namespace tetrisMelnicFederici {
     public class Tetramino {
-        //  Crea tutti i tipi di tetramino
-        private static int[, ] I = new int[1, 4] { { 1, 1, 1, 1 } };
-        private static int[, ] O = new int[2, 2] { { 1, 1 }, { 1, 1 } };
-        private static int[, ] T = new int[2, 3] { { 0, 1, 0 }, { 1, 1, 1 } };
-        private static int[, ] S = new int[2, 3] { { 0, 1, 1 }, { 1, 1, 0 } };
-        private static int[, ] Z = new int[2, 3] { { 1, 1, 0 }, { 0, 1, 1 } };
-        private static int[, ] J = new int[2, 3] { { 1, 0, 0 }, { 1, 1, 1 } };
-        private static int[, ] L = new int[2, 3] { { 0, 0, 1 }, { 1, 1, 1 } };
-        // Gli aggiunge in una lista
-        private static List<int[, ]> tetramini = new List<int[, ]> () { I, O, T, S, Z, J, L };
-        public List<int[]> posizioni = new List<int[]> ();
-        private int[, ] tetramino;
-        private Random rnd = new Random ();
-        private bool verticale = false;
 
-        public Tetramino () {
-            tetramino = tetramini[rnd.Next (0, 7)];
+        public List<int[]> posizioni;
+        private int[, ] matriceTetramino;
+        private bool verticale;
+        private bool caduto;
+        private Grid griglia;
+        private Grid grigliaTetraminiCaduti;
+        private char lettera;
+
+        public Tetramino (char lettera, Grid griglia, Grid grigliaTetraminiCaduti) {
+            caduto = false;
+            verticale = false;
+            posizioni = new List<int[]> ();
+            this.griglia = griglia;
+            this.grigliaTetraminiCaduti = grigliaTetraminiCaduti;
+            this.lettera = lettera;
+            assegnaTetramino ();
             disegnaProxForma ();
         } // End Costruttore
 
+        private void assegnaTetramino () {
+
+            switch (lettera) {
+                case 'I':
+                    matriceTetramino = new int[1, 4] { { 1, 1, 1, 1 } };
+                    break;
+                case 'O':
+                    matriceTetramino = new int[2, 2] { { 1, 1 }, { 1, 1 } };
+                    break;
+                case 'T':
+                    matriceTetramino = new int[2, 3] { { 0, 1, 0 }, { 1, 1, 1 } };
+                    break;
+                case 'S':
+                    matriceTetramino = new int[2, 3] { { 0, 1, 1 }, { 1, 1, 0 } };
+                    break;
+                case 'Z':
+                    matriceTetramino = new int[2, 3] { { 1, 1, 0 }, { 0, 1, 1 } };
+                    break;
+                case 'J':
+                    matriceTetramino = new int[2, 3] { { 1, 0, 0 }, { 1, 1, 1 } };
+                    break;
+                case 'L':
+                    matriceTetramino = new int[2, 3] { { 0, 0, 1 }, { 1, 1, 1 } };
+                    break;
+
+            }
+        }
         private void disegnaProxForma () {
             for (int i = 23; i < 33; ++i) {
                 for (int j = 3; j < 10; j++) {
@@ -34,11 +61,11 @@ namespace tetrisMelnicFederici {
                 }
 
             }
-            Grid.drawBorder ();
-            for (int i = 0; i < tetramino.GetLength (0); i++) {
-                for (int j = 0; j < tetramino.GetLength (1); j++) {
-                    if (tetramino[i, j] == 1) {
-                        Console.SetCursorPosition (((10 - tetramino.GetLength (1)) / 2 + j) * 2 + 20, i + 5);
+            // griglia.disegnaBordi ();
+            for (int i = 0; i < matriceTetramino.GetLength (0); i++) {
+                for (int j = 0; j < matriceTetramino.GetLength (1); j++) {
+                    if (matriceTetramino[i, j] == 1) {
+                        Console.SetCursorPosition (((10 - matriceTetramino.GetLength (1)) / 2 + j) * 2 + 20, i + 5);
                         Console.Write ("\u25A0");
                     }
                 }
@@ -46,49 +73,54 @@ namespace tetrisMelnicFederici {
         } // End disegnaProxForma
 
         public void Spawn () {
-            for (int i = 0; i < tetramino.GetLength (0); i++) {
-                for (int j = 0; j < tetramino.GetLength (1); j++) {
-                    if (tetramino[i, j] == 1) {
-                        posizioni.Add (new int[] { i, (10 - tetramino.GetLength (1)) / 2 + j });
+            for (int i = 0; i < matriceTetramino.GetLength (0); i++) {
+                for (int j = 0; j < matriceTetramino.GetLength (1); j++) {
+                    if (matriceTetramino[i, j] == 1) {
+                        posizioni.Add (new int[] { i, (10 - matriceTetramino.GetLength (1)) / 2 + j });
                     }
                 }
             }
+            Console.Write("spawnato");
             Aggiorna ();
         } // End Spawn
 
         public void Aggiorna () {
             for (int i = 0; i < 23; i++) {
                 for (int j = 0; j < 10; j++) {
-                    Grid.grid[i, j] = 0;
+                    griglia.setElementoMatrice (i, j, 0);
                 }
             }
             for (int i = 0; i < 4; i++) {
-                Grid.grid[posizioni[i][0], posizioni[i][1]] = 1;
+                griglia.setElementoMatrice (posizioni[i][0], posizioni[i][1], 1);
             }
-            Program.Disegna ();
         } // End Aggiorna
 
         public void Cade () {
             if (ceQualcosaSotto ()) {
                 for (int i = 0; i < 4; i++) {
-                    Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] = 1;
+                    grigliaTetraminiCaduti.setElementoMatrice (posizioni[i][0], posizioni[i][1], 1);
                 }
-                Program.caduto = true;
+                caduto = true;
             } else {
+                caduto = false;
                 for (int numCount = 0; numCount < 4; numCount++) {
                     // Sta cadendo
                     posizioni[numCount][0] += 1;
+
                 }
                 Aggiorna ();
             }
         } // End Cade
-
+        
+        public bool checkCaduto(){
+            return caduto;
+        }
         public bool ceQualcosaSotto () {
             for (int i = 0; i < 4; i++) {
                 if (posizioni[i][0] + 1 >= 23)
                     return true;
                 if (posizioni[i][0] + 1 < 23) {
-                    if (Grid.gridTetraminiCaduti[posizioni[i][0] + 1, posizioni[i][1]] == 1) {
+                    if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0] + 1, posizioni[i][1]) == 1) {
                         return true;
                     }
                 }
@@ -99,7 +131,7 @@ namespace tetrisMelnicFederici {
             for (int i = 0; i < 4; i++) {
                 if (posizioni[i][1] == 0) {
                     return true;
-                } else if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1] - 1] == 1) {
+                } else if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0], posizioni[i][1] - 1) == 1) {
                     return true;
                 }
             }
@@ -109,7 +141,7 @@ namespace tetrisMelnicFederici {
             for (int i = 0; i < 4; i++) {
                 if (posizioni[i][1] == 9) {
                     return true;
-                } else if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1] + 1] == 1) {
+                } else if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0], posizioni[i][1] + 1) == 1) {
                     return true;
                 }
             }
@@ -128,14 +160,14 @@ namespace tetrisMelnicFederici {
             for (int i = 0; i < 4; i++) {
                 if (ycoords.Max () - ycoords.Min () == 3) {
                     if (ycoords.Max () == posizioni[i][0] | ycoords.Max () - 1 == posizioni[i][0]) {
-                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                        if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0], posizioni[i][1]) == 1) {
                             return true;
                         }
                     }
 
                 } else {
                     if (ycoords.Max () == posizioni[i][0]) {
-                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                        if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0], posizioni[i][1]) == 1) {
                             return true;
                         }
                     }
@@ -158,14 +190,14 @@ namespace tetrisMelnicFederici {
             for (int i = 0; i < 4; i++) {
                 if (xcoords.Max () - xcoords.Min () == 3) {
                     if (xcoords.Min () == posizioni[i][1] | xcoords.Min () + 1 == posizioni[i][1]) {
-                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                        if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0], posizioni[i][1]) == 1) {
                             return true;
                         }
                     }
 
                 } else {
                     if (xcoords.Min () == posizioni[i][1]) {
-                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                        if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0], posizioni[i][1]) == 1) {
                             return true;
                         }
                     }
@@ -189,14 +221,14 @@ namespace tetrisMelnicFederici {
             for (int i = 0; i < 4; i++) {
                 if (xcoords.Max () - xcoords.Min () == 3) {
                     if (xcoords.Max () == posizioni[i][1] | xcoords.Max () - 1 == posizioni[i][1]) {
-                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                        if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0], posizioni[i][1]) == 1) {
                             return true;
                         }
                     }
 
                 } else {
                     if (xcoords.Max () == posizioni[i][1]) {
-                        if (Grid.gridTetraminiCaduti[posizioni[i][0], posizioni[i][1]] == 1) {
+                        if (grigliaTetraminiCaduti.getElementoMatrice (posizioni[i][0], posizioni[i][1]) == 1) {
                             return true;
                         }
                     }
@@ -210,27 +242,32 @@ namespace tetrisMelnicFederici {
             int[] pivot = posizioni[2];
             String direzione = "orario";
             int count = 0;
-
-            if (tetramino != tetramini[1]) {
-                for (int i = 0; i < tetramino.GetLength (0); i++) {
-                    for (int j = 0; j < tetramino.GetLength (1); j++) {
-                        if (tetramino[i, j] == 1) {
-                            tempPos.Add (new int[] { i, (10 - tetramino.GetLength (1)) / 2 + j });
+            if (lettera != 'O') {
+                for (int i = 0; i < matriceTetramino.GetLength (0); i++) {
+                    for (int j = 0; j < matriceTetramino.GetLength (1); j++) {
+                        if (matriceTetramino[i, j] == 1) {
+                            tempPos.Add (new int[] { i, (10 - matriceTetramino.GetLength (1)) / 2 + j });
                         }
                     }
                 }
+                switch (lettera) {
+                    case 'I':
+                        if (verticale) {
+                            direzione = "antiorario";
+                        }
+                        break;
 
-                if (tetramino == tetramini[0]) {
-                    if (verticale) {
-                        direzione = "antiorario";
-                    }
-                } else if (tetramino == tetramini[3]) {
-                    pivot = posizioni[3];
+                    case 'S':
+                        pivot = posizioni[3];
+                        break;
+
+                    default:
+                        break;
+
                 }
                 for (int i = 0; i < posizioni.Count; i++) {
                     tempPos[i] = transformaMatrice (posizioni[i], pivot, direzione);
                 }
-
                 while (ceOverlaySx (tempPos) != false | ceOverlayDx (tempPos) != false | ceOverlaySotto (tempPos) != false) {
                     if (ceOverlaySx (tempPos) == true) {
                         for (int i = 0; i < posizioni.Count; i++) {
@@ -253,12 +290,11 @@ namespace tetrisMelnicFederici {
                     }
                     count++;
                 }
-
                 posizioni = tempPos;
             }
 
         } // Rotazione
-        public int[] transformaMatrice (int[] coord, int[] coordPivot, String senso) {
+        private int[] transformaMatrice (int[] coord, int[] coordPivot, String senso) {
             int[] nuoveCoordinate = {
                 coord[0] - coordPivot[0],
                 coord[1] - coordPivot[1]
@@ -275,5 +311,5 @@ namespace tetrisMelnicFederici {
             };
             return nuoveCoordinate;
         }
-    } // End Classe
+    }
 }
