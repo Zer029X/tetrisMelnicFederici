@@ -85,7 +85,7 @@ namespace tetrisMelnicFederici {
             Console.SetCursorPosition (0, 0);
             Console.WriteLine ("Game Over \n Rigiocare? (S/N)");
             string input = Console.ReadLine ();
-            input.Replace (" ", string.Empty);
+            input = input.Replace (" ", String.Empty);
             if (input == "s" || input == "S") {
 
                 Console.Clear ();
