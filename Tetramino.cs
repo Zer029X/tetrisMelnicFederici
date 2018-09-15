@@ -80,7 +80,6 @@ namespace tetrisMelnicFederici {
                     }
                 }
             }
-            Console.Write("spawnato");
             Aggiorna ();
         } // End Spawn
 
