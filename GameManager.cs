@@ -121,6 +121,8 @@ namespace tetrisMelnicFederici {
             Console.Write (" - Freccia Giù:          aumenta la velocita di caduta");
             Console.SetCursorPosition (25, 14);
             Console.Write (" - Barra Spaziatrice:    fai cadere il pezzo");
+            Console.SetCursorPosition (25, 15);
+            Console.Write (" - P:                    attiva/ disattiva pausa");
         }
         private void clearLinea () {
             int combo = 0;
@@ -260,11 +262,11 @@ namespace tetrisMelnicFederici {
             if (key.Key == ConsoleKey.P & isKeyPressed) {
                 if (!isPaused) {
                     timer.Stop ();
-                    timerCaduta.Stop();
+                    timerCaduta.Stop ();
                     isPaused = true;
                 } else {
                     timer.Start ();
-                    timerCaduta.Start();
+                    timerCaduta.Start ();
                     isPaused = false;
                 }
 
