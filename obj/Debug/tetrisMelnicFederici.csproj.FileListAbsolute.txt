@@ -5,3 +5,10 @@ C:\Users\andri\source\repos\tetrisMelnicFederici\obj\Debug\tetrisMelnicFederici.
 C:\Users\andri\source\repos\tetrisMelnicFederici\obj\Debug\tetrisMelnicFederici.exe
 C:\Users\andri\source\repos\tetrisMelnicFederici\obj\Debug\tetrisMelnicFederici.pdb
 C:\Users\andri\source\repos\tetrisMelnicFederici\obj\Debug\tetrisMelnicFederici.csprojAssemblyReference.cache
+C:\Users\andri\Desktop\tetrisMelnicFederici\bin\Debug\tetrisMelnicFederici.exe.config
+C:\Users\andri\Desktop\tetrisMelnicFederici\bin\Debug\tetrisMelnicFederici.exe
+C:\Users\andri\Desktop\tetrisMelnicFederici\bin\Debug\tetrisMelnicFederici.pdb
+C:\Users\andri\Desktop\tetrisMelnicFederici\obj\Debug\tetrisMelnicFederici.csprojAssemblyReference.cache
+C:\Users\andri\Desktop\tetrisMelnicFederici\obj\Debug\tetrisMelnicFederici.csproj.CoreCompileInputs.cache
+C:\Users\andri\Desktop\tetrisMelnicFederici\obj\Debug\tetrisMelnicFederici.exe
+C:\Users\andri\Desktop\tetrisMelnicFederici\obj\Debug\tetrisMelnicFederici.pdb
