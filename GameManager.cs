@@ -28,6 +28,8 @@ namespace tetrisMelnicFederici {
         private int livello;
         private int punti;
 
+        private bool isPaused;
+
         #endregion
         #region INPUT
         public static ConsoleKeyInfo key;
@@ -44,7 +46,7 @@ namespace tetrisMelnicFederici {
             tetramino = nextTetramino;
             // tetramino = new Tetramino (lettere[rnd.Next (0, 7)], griglia, grigliaTetraminiCaduti);
             nextTetramino = new Tetramino (lettere[rnd.Next (0, 7)], griglia, grigliaTetraminiCaduti);
-            isKeyPressed = false;
+
         }
         #endregion
 
@@ -61,6 +63,7 @@ namespace tetrisMelnicFederici {
             livello = 1;
             grigliaTetraminiCaduti.resetGrigliaTetraminiCaduti ();
             isKeyPressed = false;
+            isPaused = false;
             long time = timer.ElapsedMilliseconds;
         }
         public void iniziaGioco () {
@@ -98,15 +101,16 @@ namespace tetrisMelnicFederici {
 
             return continua;
         }
-
-        public void scriviInfo () {
+        private void scriviPunti () {
             Console.SetCursorPosition (25, 0);
             Console.WriteLine ("Livello: " + livello);
             Console.SetCursorPosition (25, 1);
             Console.WriteLine ("Punti: " + punti);
             Console.SetCursorPosition (25, 2);
             Console.WriteLine ("Linee Completate: " + lineeTot);
-
+        }
+        private void scriviInfo () {
+            scriviPunti ();
             Console.SetCursorPosition (25, 10);
             Console.Write ("Controlli:");
             Console.SetCursorPosition (25, 11);
@@ -118,7 +122,7 @@ namespace tetrisMelnicFederici {
             Console.SetCursorPosition (25, 14);
             Console.Write (" - Barra Spaziatrice:    fai cadere il pezzo");
         }
-        public void clearLinea () {
+        private void clearLinea () {
             int combo = 0;
             for (int i = 0; i < 23; i++) {
                 int j;
@@ -151,7 +155,7 @@ namespace tetrisMelnicFederici {
                 }
             }
             if (combo == 1)
-                punti += 40 * livello;
+                punti += 50 * livello;
             else if (combo == 2)
                 punti += 100 * livello;
             else if (combo == 3)
@@ -171,17 +175,12 @@ namespace tetrisMelnicFederici {
             else if (lineeTot < 150) livello = 10;
 
             if (combo > 0) {
-                Console.SetCursorPosition (25, 0);
-                Console.WriteLine ("Livello: " + livello);
-                Console.SetCursorPosition (25, 1);
-                Console.WriteLine ("Score: " + punti);
-                Console.SetCursorPosition (25, 2);
-                Console.WriteLine ("Linee Completate: " + lineeTot);
+                scriviPunti ();
             }
 
-            cadenzaCaduta = 300 - 22 * livello;
+            cadenzaCaduta = 300 - 10 * livello;
         }
-        public void disegnaGriglia () {
+        private void disegnaGriglia () {
             for (int i = 0; i < 23; ++i) {
                 for (int j = 0; j < 10; j++) {
                     Console.SetCursorPosition (1 + 2 * j, i);
@@ -222,41 +221,53 @@ namespace tetrisMelnicFederici {
             }
         }
 
-        public void CheckInput () {
+        private void CheckInput () {
             if (Console.KeyAvailable) {
                 key = Console.ReadKey ();
                 isKeyPressed = true;
             } else
                 isKeyPressed = false;
 
-            if (key.Key == ConsoleKey.LeftArrow & !tetramino.ceQualcosaSx () & isKeyPressed) {
+            if (!isPaused & key.Key == ConsoleKey.LeftArrow & !tetramino.ceQualcosaSx () & isKeyPressed) {
                 for (int i = 0; i < 4; i++) {
                     tetramino.posizioni[i][1] -= 1;
                 }
                 tetramino.Aggiorna ();
                 disegnaGriglia ();
                 Console.Beep ();
-            } else if (key.Key == ConsoleKey.RightArrow & !tetramino.ceQualcosaDx () & isKeyPressed) {
+            } else if (!isPaused & key.Key == ConsoleKey.RightArrow & !tetramino.ceQualcosaDx () & isKeyPressed) {
                 for (int i = 0; i < 4; i++) {
                     tetramino.posizioni[i][1] += 1;
                 }
                 tetramino.Aggiorna ();
                 disegnaGriglia ();
             }
-            if (key.Key == ConsoleKey.DownArrow & isKeyPressed) {
+            if (!isPaused & key.Key == ConsoleKey.DownArrow & isKeyPressed) {
                 tetramino.Cade ();
                 disegnaGriglia ();
             }
-            if (key.Key == ConsoleKey.Spacebar & isKeyPressed) {
+            if (!isPaused & key.Key == ConsoleKey.Spacebar & isKeyPressed) {
                 for (; tetramino.ceQualcosaSotto () != true;) {
                     tetramino.Cade ();
                     disegnaGriglia ();
                 }
             }
-            if (key.Key == ConsoleKey.UpArrow & isKeyPressed) {
+            if (!isPaused & key.Key == ConsoleKey.UpArrow & isKeyPressed) {
                 tetramino.Rotazione ();
                 tetramino.Aggiorna ();
                 disegnaGriglia ();
+            }
+            if (key.Key == ConsoleKey.P & isKeyPressed) {
+                if (!isPaused) {
+                    timer.Stop ();
+                    timerCaduta.Stop();
+                    isPaused = true;
+                } else {
+                    timer.Start ();
+                    timerCaduta.Start();
+                    isPaused = false;
+                }
+
             }
 
         }
