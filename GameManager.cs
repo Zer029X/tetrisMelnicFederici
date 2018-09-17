@@ -19,14 +19,13 @@ namespace tetrisMelnicFederici {
 
         #endregion
         #region  game parameters
-        private static Stopwatch timer;
-        private static Stopwatch timerCaduta;
-        private static Stopwatch timerInput;
-        private static int tempoCaduta;
-        private static int cadenzaCaduta;
-        private static int points;
-        private static int lineeTot;
-        private static int livello;
+        private Stopwatch timer;
+        private Stopwatch timerCaduta;
+        private Stopwatch timerInput;
+        private int tempoCaduta;
+        private int cadenzaCaduta;
+        private int lineeTot;
+        private int livello;
         private int punti;
 
         #endregion
@@ -55,7 +54,7 @@ namespace tetrisMelnicFederici {
             timer = new Stopwatch ();
             timerCaduta = new Stopwatch ();
             timerInput = new Stopwatch ();
-            points = 0;
+            punti = 0;
             tempoCaduta = 300;
             cadenzaCaduta = 300;
             lineeTot = 0;
@@ -100,7 +99,7 @@ namespace tetrisMelnicFederici {
             Console.SetCursorPosition (25, 0);
             Console.WriteLine ("Livello: " + livello);
             Console.SetCursorPosition (25, 1);
-            Console.WriteLine ("Score: " + punti);
+            Console.WriteLine ("Punti: " + punti);
             Console.SetCursorPosition (25, 2);
             Console.WriteLine ("Linee Completate: " + lineeTot);
 
