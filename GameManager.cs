@@ -76,13 +76,17 @@ namespace tetrisMelnicFederici {
             timerCaduta.Start ();
             scriviInfo ();
             tetramino.Spawn ();
-            disegnaGriglia();
+            disegnaGriglia ();
             aggiorna ();
         }
         public bool gameOver () {
             bool continua;
-            Console.SetCursorPosition (0, 0);
-            Console.WriteLine ("Game Over \n Rigiocare? (S/N)");
+            grigliaTetraminiCaduti.resetGrigliaTetraminiCaduti ();
+            disegnaGriglia ();
+            Console.SetCursorPosition (4, 7);
+            Console.WriteLine ("Game Over");
+            Console.SetCursorPosition (3, 8);
+            Console.Write ("Rigiocare? (S/N)");
             string input = Console.ReadLine ();
             input = input.Replace (" ", String.Empty);
             if (input == "s" || input == "S") {
@@ -200,13 +204,13 @@ namespace tetrisMelnicFederici {
                     timerCaduta.Restart ();
 
                     tetramino.Cade ();
-                    disegnaGriglia();
+                    disegnaGriglia ();
                 }
                 if (tetramino.checkCaduto ()) {
                     tetramino = nextTetramino;
                     nextTetramino = new Tetramino (lettere[rnd.Next (0, 7)], griglia, grigliaTetraminiCaduti);
                     tetramino.Spawn ();
-                    disegnaGriglia();
+                    disegnaGriglia ();
                 }
                 int j;
                 for (j = 0; j < 10; j++) {
@@ -231,7 +235,7 @@ namespace tetrisMelnicFederici {
                 }
                 tetramino.Aggiorna ();
                 disegnaGriglia ();
-                Console.Beep();
+                Console.Beep ();
             } else if (key.Key == ConsoleKey.RightArrow & !tetramino.ceQualcosaDx () & isKeyPressed) {
                 for (int i = 0; i < 4; i++) {
                     tetramino.posizioni[i][1] += 1;
