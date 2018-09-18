@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace tetrisMelnicFederici {
-    public class Window {
+    public static class Window {
         private const int MF_BYCOMMAND = 0x00000000;
         public const int SC_MINIMIZE = 0xF020;
         public const int SC_MAXIMIZE = 0xF030;
@@ -20,10 +20,8 @@ namespace tetrisMelnicFederici {
 
         [DllImport ("kernel32.dll", ExactSpelling = true)]
         private static extern IntPtr GetConsoleWindow ();
-        public Window(){
-            
-        }
-        public void disableWindowResize () {
+
+        public static void disableWindowResize () {
             IntPtr handle = GetConsoleWindow ();
             IntPtr sysMenu = GetSystemMenu (handle, false);
 
