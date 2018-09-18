@@ -23,7 +23,7 @@ namespace tetrisMelnicFederici {
             this.grigliaTetraminiCaduti = grigliaTetraminiCaduti;
             this.lettera = lettera;
             assegnaTetramino ();
-            disegnaProxForma ();
+            Output.disegnaProxForma(matriceTetramino);
         } // End Costruttore
 
         private void assegnaTetramino () {
@@ -53,25 +53,6 @@ namespace tetrisMelnicFederici {
 
             }
         }
-        private void disegnaProxForma () {
-            for (int i = 23; i < 33; ++i) {
-                for (int j = 3; j < 10; j++) {
-                    Console.SetCursorPosition (i, j);
-                    Console.Write (" ");
-                }
-
-            }
-            // griglia.disegnaBordi ();
-            for (int i = 0; i < matriceTetramino.GetLength (0); i++) {
-                for (int j = 0; j < matriceTetramino.GetLength (1); j++) {
-                    if (matriceTetramino[i, j] == 1) {
-                        Console.SetCursorPosition (((10 - matriceTetramino.GetLength (1)) / 2 + j) * 2 + 20, i + 5);
-                        Console.Write ("\u25A0");
-                    }
-                }
-            }
-        } // End disegnaProxForma
-
         public void Spawn () {
             for (int i = 0; i < matriceTetramino.GetLength (0); i++) {
                 for (int j = 0; j < matriceTetramino.GetLength (1); j++) {
