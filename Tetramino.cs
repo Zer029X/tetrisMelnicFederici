@@ -23,7 +23,6 @@ namespace tetrisMelnicFederici {
             this.grigliaTetraminiCaduti = grigliaTetraminiCaduti;
             this.lettera = lettera;
             assegnaTetramino ();
-            Output.disegnaProxForma(matriceTetramino);
         } // End Costruttore
 
         private void assegnaTetramino () {
@@ -291,5 +290,9 @@ namespace tetrisMelnicFederici {
             };
             return nuoveCoordinate;
         }
+        public int[, ] getMatriceTetramino(){
+            return matriceTetramino;
+        }
     }
+
 }

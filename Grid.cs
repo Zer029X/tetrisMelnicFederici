@@ -19,7 +19,7 @@ namespace tetrisMelnicFederici {
             matriceGriglia[i, j] = data;
         }
 
-        public void resetGrigliaTetraminiCaduti () {
+        public void resetGriglia () {
             for (int i = 0; i < 23; i++) {
                 for (int j = 0; j < 10; j++) {
                     matriceGriglia[i, j] = 0;
